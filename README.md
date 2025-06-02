@@ -1,34 +1,43 @@
-# Astro Starter Kit: Basics
+# HTML Preview Editor
 
-```sh
-npm create astro@latest -- --template basics
-```
+A modern HTML preview editor built with Monaco Editor and Astro 5. This project provides a real-time HTML editing experience with instant preview capabilities.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+[![Built with Astro](https://astro.badg.es/v2/built-with-astro/small.svg)](https://astro.build)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## ✨ Features
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- Real-time HTML preview
+- Powered by Monaco Editor (the same editor used in VS Code)
+- Built on Astro 5's latest features and optimizations
+- Responsive design for all devices
+- Fast performance with minimal JavaScript
 
-## 🚀 Project Structure
+## 🚀 Getting Started
 
-Inside of your Astro project, you'll see the following folders and files:
+### Prerequisites
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- Node.js 18 or higher
+- npm or yarn
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### Installation
+
+1. Clone the repository
+   ```sh
+   git clone https://github.com/JoseCortez1/html-preview-astro.git
+   cd html-preview-astro
+   ```
+
+2. Install dependencies
+   ```sh
+   npm install
+   ```
+
+3. Start the development server
+   ```sh
+   npm run dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:4321`
 
 ## 🧞 Commands
 
@@ -43,6 +52,46 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🛠️ Project Structure
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```text
+/
+├── public/            # Static assets
+│   └── favicon.svg
+├── src/
+│   ├── assets/        # Images and other assets
+│   ├── components/    # Reusable Astro components
+│   ├── layouts/       # Page layouts
+│   └── pages/         # File-based routing
+└── package.json
+```
+
+To learn more about the folder structure of an Astro project, refer to [the Astro guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+
+## 💻 Technologies
+
+- [Astro](https://astro.build/) - The web framework for content-driven websites
+- [Monaco Editor](https://microsoft.github.io/monaco-editor/) - The editor that powers VS Code
+- TypeScript - For type safety and better developer experience
+
+## 🔄 How It Works
+
+The Monaco Editor allows you to write and edit HTML code, while the preview pane renders the result in real-time, providing an interactive coding experience.
+
+## 🔧 Configuration
+
+You can configure the editor behavior and appearance by modifying the Monaco Editor settings in the component files.
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 👤 Author
+
+**Jose Cortez**
+
+* GitHub: [JoseCortez1](https://github.com/JoseCortez1)
+
+---
+
+Built with ❤️ using Astro 5

@@ -1,0 +1,133 @@
+---
+// HTMLPreviewer.astro
+---
+<div class="html-previewer">
+
+  <div class="editor-container">
+    <div id="monaco-editor"></div>
+  </div>
+  <div class="preview-container">
+    <iframe id="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+  </div>
+</div>
+
+<style>
+  :root{
+    --orange-400: #ff8904;
+  }
+
+	.header{
+		font-weight: bold;
+		font-size: 2rem;
+		text-align: center;
+		padding: 1rem 0;
+	}
+	.html-previewer {
+		display: grid;
+		grid-template-columns: 60% auto; 
+		height: 80vh;
+		background: var(--orange-400);
+		border-radius: 8px;
+		margin: 0 1rem;
+		padding: 0.2rem;
+		overflow: hidden;
+		@media (max-width: 768px) {
+			grid-template-columns: 1fr; 
+			min-height: 100vh; 
+		}
+	}
+
+	.editor-container {
+		border-right: 1px solid var(--orange-400);
+	}
+
+	.preview-container {
+		flex: 1;
+		background: white;
+	}
+
+	#monaco-editor {
+		height: 100%;
+		width: 100%;
+	}
+
+	#preview-frame {
+		width: 100%;
+		height: 100%;
+		border: none;
+		border-radius: 0 8px 8px 0;
+		
+	}
+</style>
+
+<script>
+  import * as monaco from 'monaco-editor';
+
+  // Configuración inicial del editor
+  const initialHTML = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Preview editor!</h1>
+    <p>Edita el HTML en el editor de la izquierda para ver los cambios aquí.</p>
+</body>
+</html>`;
+
+  // Crear el editor Monaco
+  const editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+    value: initialHTML,
+    language: 'html',
+    automaticLayout: true,
+    fontSize: 14,
+    wordWrap: 'on',
+	scrollBeyondLastLine: false,
+
+  });
+
+  // Función para actualizar la vista previa
+  function updatePreview() {
+    const htmlContent = editor.getValue();
+    const previewFrame = document.getElementById('preview-frame');
+    
+    // Crear un blob con el contenido HTML
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    
+    // Actualizar el src del iframe
+    previewFrame.src = url;
+    
+    // Limpiar el URL anterior después de un tiempo
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 1000);
+  }
+
+  // Actualizar vista previa inicial
+  updatePreview();
+
+  // Escuchar cambios en el editor
+  editor.onDidChangeModelContent(() => {
+    // Debounce para evitar actualizaciones excesivas
+    clearTimeout(window.previewTimeout);
+    window.previewTimeout = setTimeout(updatePreview, 300);
+  });
+
+  // Limpiar recursos al salir
+  window.addEventListener('beforeunload', () => {
+    editor.dispose();
+  });
+</script>
