@@ -44,6 +44,11 @@ const baseURL = Astro.site?.href || "https://html-preview.educortez.com";
 const imageURL = image.startsWith('http') 
   ? image 
   : new URL(image, baseURL).href;
+
+// Add this near the top of your component
+const BASE_URL = import.meta.env.PROD 
+  ? 'https://html-preview.educortez.com' 
+  : '';
 ---
 
 <!doctype html>
@@ -94,6 +99,9 @@ const imageURL = image.startsWith('http')
     
     <!-- Page Title -->
     <title>{title}</title>
+
+    <!-- Add a base tag -->
+    <base href={BASE_URL + '/'} />
   </head>
   <body>
     <Header />

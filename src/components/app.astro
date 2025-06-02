@@ -7,7 +7,7 @@
     <div id="monaco-editor"></div>
   </div>
   <div class="preview-container">
-    <iframe id="preview-frame" sandbox="allow-scripts allow-same-origin"></iframe>
+    <iframe id="preview-frame" ></iframe>
   </div>
 </div>
 
@@ -86,6 +86,25 @@
     <p>Edita el HTML en el editor de la izquierda para ver los cambios aquí.</p>
 </body>
 </html>`;
+
+  // Add this configuration BEFORE Monaco is initialized
+  window.MonacoEnvironment = {
+    getWorkerUrl: function(moduleId, label) {
+      if (label === 'json') {
+        return '/monaco-editor/min/vs/language/json/json.worker.js';
+      }
+      if (label === 'css' || label === 'scss' || label === 'less') {
+        return '/monaco-editor/min/vs/language/css/css.worker.js';
+      }
+      if (label === 'html' || label === 'handlebars' || label === 'razor') {
+        return '/monaco-editor/min/vs/language/html/html.worker.js';
+      }
+      if (label === 'typescript' || label === 'javascript') {
+        return '/monaco-editor/min/vs/language/typescript/ts.worker.js';
+      }
+      return '/monaco-editor/min/vs/editor/editor.worker.js';
+    }
+  };
 
   // Crear el editor Monaco
   const editor = monaco.editor.create(document.getElementById('monaco-editor'), {

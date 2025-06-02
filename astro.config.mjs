@@ -11,7 +11,15 @@ export default defineConfig({
     ssr: {
       noExternal: ['monaco-editor']
     },
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: {
+      assetsInlineLimit: 0, // Ensures Monaco assets don't get inlined
+    },
+    resolve: {
+      alias: {
+        'vscode': 'monaco-editor/esm/vs/editor/editor.api'
+      }
+    }
   },
 
   adapter: vercel(),
