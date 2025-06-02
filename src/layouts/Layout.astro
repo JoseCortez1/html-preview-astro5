@@ -1,29 +1,115 @@
 ---
-import  '../styles/global.css'
+import '../styles/global.css';
 import Header from '../components/header.astro';
 import Footer from '../components/footer.astro';
+
+// Define props with defaults for SEO
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = "HTML Preview Editor - Test & Edit HTML Code in Real-time",
+  description = "Free online HTML editor with live preview. Write and test HTML, CSS, and JavaScript code in real-time with our Monaco-powered editor. Perfect for web developers and students.",
+  image = "educortez.png", // Usando imagen existente para social sharing
+  canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://html-preview.educortez.com").href,
+  type = "website"
+} = Astro.props;
+
+// Prepare structured data
+const structuredData = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HTML Preview Editor",
+  "description": description,
+  "url": canonicalURL,
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Eduardo Cortez",
+    "url": "https://educortez.com"
+  }
+});
+const baseURL = Astro.site?.href || "https://html-preview.educortez.com";
+const imageURL = image.startsWith('http') 
+  ? image 
+  : new URL(image, baseURL).href;
 ---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Html preview</title>
-	</head>
-	<body>
-		<Header/>
-			<slot />
-		<Footer />
-	</body>
+  <head>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="HTML editor, live preview, code editor, HTML preview, web development, Monaco editor, testing HTML, real-time HTML editor" />
+    <meta name="author" content="Eduardo Cortez" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="HTML Preview Editor" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:creator" content="@josecortez" />
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json" set:html={structuredData} />
+    
+    <!-- Generator Info -->
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Page Title -->
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+   
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
