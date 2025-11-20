@@ -11,16 +11,17 @@ const locale = Astro.props.locale || getCurrentLocale(Astro.url);
 const t = getTranslations(locale);
 
 ---
-<div class="html-previewer" role="region" aria-label={t.home.editorLabel}>
+<div class="grid grid-cols-[60%_auto] h-[80vh] bg-[var(--orange-400)] dark:bg-[var(--orange-500)] rounded-lg mx-4 p-0.5 overflow-hidden transition-colors duration-300 max-md:grid-cols-1 max-md:min-h-screen" role="region" aria-label={t.home.editorLabel}>
 
-  <div class="editor-container" role="region" aria-label={t.home.editorLabel}>
+  <div class="border-r border-[var(--orange-400)] dark:border-[var(--orange-500)] relative bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)] transition-colors duration-300" role="region" aria-label={t.home.editorLabel}>
     <label for="monaco-editor" class="sr-only">{t.home.editorLabel}</label>
-    <div id="monaco-editor" role="textbox" aria-label={t.home.editorLabel} aria-multiline="true" tabindex="0"></div>
+    <div id="monaco-editor" class="h-full w-full outline-none focus-visible:outline-3 focus-visible:outline-[var(--orange-400)] focus-visible:-outline-offset-3" role="textbox" aria-label={t.home.editorLabel} aria-multiline="true" tabindex="0"></div>
   </div>
-  <div class="preview-container" role="region" aria-label={t.home.previewLabel}>
+  <div class="flex-1 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)] relative transition-colors duration-300" role="region" aria-label={t.home.previewLabel}>
     <label for="preview-frame" class="sr-only">{t.home.previewLabel}</label>
     <iframe 
       id="preview-frame" 
+      class="w-full h-full border-0 rounded-r-lg block"
       title={t.home.previewLabel}
       aria-label={t.home.previewLabel}
       sandbox="allow-same-origin allow-scripts"
@@ -29,17 +30,6 @@ const t = getTranslations(locale);
 </div>
 
 <style>
-  :root{
-    --orange-400: #ff8904;
-  }
-
-	.header{
-		font-weight: bold;
-		font-size: 2rem;
-		text-align: center;
-		padding: 1rem 0;
-	}
-
 	/* Screen reader only - para accesibilidad */
 	.sr-only {
 		position: absolute;
@@ -51,51 +41,6 @@ const t = getTranslations(locale);
 		clip: rect(0, 0, 0, 0);
 		white-space: nowrap;
 		border-width: 0;
-	}
-
-	.html-previewer {
-		display: grid;
-		grid-template-columns: 60% auto; 
-		height: 80vh;
-		background: var(--orange-400);
-		border-radius: 8px;
-		margin: 0 1rem;
-		padding: 0.2rem;
-		overflow: hidden;
-		@media (max-width: 768px) {
-			grid-template-columns: 1fr; 
-			min-height: 100vh; 
-		}
-	}
-
-	.editor-container {
-		border-right: 1px solid var(--orange-400);
-		position: relative;
-	}
-
-	.preview-container {
-		flex: 1;
-		background: white;
-		position: relative;
-	}
-
-	#monaco-editor {
-		height: 100%;
-		width: 100%;
-		outline: none;
-	}
-
-	#monaco-editor:focus-visible {
-		outline: 3px solid var(--orange-400);
-		outline-offset: -3px;
-	}
-
-	#preview-frame {
-		width: 100%;
-		height: 100%;
-		border: none;
-		border-radius: 0 8px 8px 0;
-		display: block;
 	}
 
 	/* Mejorar contraste y accesibilidad */
@@ -229,6 +174,15 @@ const t = getTranslations(locale);
 
     // Acceder a monaco correctamente dependiendo de cómo se cargó
     const monacoEditor = monaco.default || monaco;
+    
+    // Función para obtener el tema de Monaco basado en el tema de la página
+    function getMonacoTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      return currentTheme === 'dark' ? 'vs-dark' : 'vs';
+    }
+    
     const editor = monacoEditor.editor.create(monacoEditorElement, {
       value: editorContent,
       language: 'html',
@@ -236,6 +190,18 @@ const t = getTranslations(locale);
       fontSize: 14,
       wordWrap: 'on',
       scrollBeyondLastLine: false,
+      theme: getMonacoTheme(),
+    });
+    
+    // Actualizar el tema de Monaco cuando cambie el tema de la página
+    const themeObserver = new MutationObserver(() => {
+      const newTheme = getMonacoTheme();
+      monacoEditor.editor.setTheme(newTheme);
+    });
+    
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme', 'class']
     });
 
     // Función para verificar si el contenido es el HTML inicial

@@ -12,18 +12,18 @@ const currentYear = new Date().getFullYear();
 
 ---
 
-<footer class="text-white px-6 mt-8" role="contentinfo" aria-label="Pie de página">
+<footer class="px-6 mt-8 bg-[var(--bg-primary)] transition-colors duration-300" role="contentinfo" aria-label="Pie de página">
 
   
-  <div class="max-w-7xl mx-auto py-8 border-t border-orange-600 flex flex-col sm:flex-row justify-between items-center gap-4">
-    <p class="text-black text-sm">
+  <div class="max-w-7xl mx-auto py-8 border-t border-[var(--orange-600)] dark:border-[var(--orange-500)] flex flex-col sm:flex-row justify-between items-center gap-4 transition-colors duration-300">
+    <p class="text-[var(--text-primary)] text-sm transition-colors duration-300">
       &copy; {currentYear} <span itemprop="copyrightHolder">Eduardo Cortez</span>. 
       <span class="sr-only">{t.footer.rights}</span>
       <span aria-hidden="true">{t.footer.rights}</span>
     </p>
     <a 
       href="https://educortez.com" 
-      class="text-orange-400 hover:underline text-sm flex items-center gap-2 group font-bold focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded"
+      class="text-orange-400 dark:text-orange-500 hover:underline text-sm flex items-center gap-2 group font-bold focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded"
       aria-label={t.footer.visitWebsite}
       rel="noopener noreferrer"
       target="_blank"

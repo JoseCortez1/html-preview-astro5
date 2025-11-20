@@ -1,1 +1,59 @@
 @import "tailwindcss";
+
+:root {
+  --orange-400: #ff8904;
+  --orange-500: #e67a00;
+  --orange-600: #cc6b00;
+  
+  /* Light mode colors - valores por defecto */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Forzar light mode cuando está explícitamente seleccionado */
+[data-theme="light"],
+:not([data-theme]) {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --orange-400: #ff8904;
+  --orange-500: #e67a00;
+  --orange-600: #cc6b00;
+}
+
+[data-theme="dark"] {
+  /* Dark mode colors - contrastan con naranja */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  
+  /* Ajustar naranja para mejor contraste en dark mode */
+  --orange-400: #ff9500;
+  --orange-500: #ff8904;
+  --orange-600: #ff7d00;
+}
+
+/* Solo aplicar dark mode automático si no hay preferencia explícita */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --orange-400: #ff9500;
+    --orange-500: #ff8904;
+    --orange-600: #ff7d00;
+  }
+}

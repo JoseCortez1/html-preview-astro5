@@ -21,8 +21,8 @@ const isActive = (path: string) => {
 // Generar clases para los enlaces basadas en si están activos o no
 const getLinkClasses = (path: string) => {
     const baseClasses = "text-sm font-semibold";
-    const activeClasses = "text-orange-500 border-b-2 border-orange-500";
-    const inactiveClasses = "text-gray-800 hover:text-orange-800 hover:border-b-0 ";
+    const activeClasses = "text-orange-500 dark:text-orange-400 border-b-2 border-orange-500 dark:border-orange-400";
+    const inactiveClasses = "text-gray-800 dark:text-gray-200 hover:text-orange-800 dark:hover:text-orange-400 hover:border-b-0";
     
     return `${baseClasses} ${isActive(path) ? activeClasses : inactiveClasses}`;
 }
@@ -32,11 +32,11 @@ const getLocalizedHref = (path: string) => {
 }
 ---
 
-<header role="banner">
-    <nav class="flex items-center justify-between p-4 shadow-sm border-b border-gray-200" role="navigation" aria-label={t.nav.skipToContent}>
+<header role="banner" class="bg-[var(--bg-primary)] transition-colors duration-300">
+    <nav class="flex items-center justify-between p-4 shadow-sm border-b border-[var(--border-color)] bg-[var(--bg-primary)] transition-colors duration-300" role="navigation" aria-label={t.nav.skipToContent}>
         <div>
             <a 
-                class="text-sm gap-4 font-semibold hover:text-gray-950 text-gray-800 flex items-center focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded" 
+                class="text-sm gap-4 font-semibold hover:text-gray-950 dark:hover:text-gray-100 text-gray-800 dark:text-gray-200 flex items-center focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded" 
                 href={getLocalizedHref('/')}
                 aria-label="HTML Preview Editor - {t.nav.home}"
             >
@@ -67,11 +67,24 @@ const getLocalizedHref = (path: string) => {
                   </a>
               </li>
           </ul>
+          <button
+            id="theme-toggle"
+            class="p-2 rounded-lg text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors"
+            aria-label="Toggle dark mode"
+            title="Toggle dark mode"
+          >
+            <svg id="theme-icon-light" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <svg id="theme-icon-dark" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+          </button>
           <div class="relative" role="group" aria-label={t.lang.select}>
             <label for="language-selector" class="sr-only">{t.lang.select}</label>
             <select 
               id="language-selector"
-              class="text-sm font-semibold text-gray-800 bg-transparent border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer"
+              class="text-sm font-semibold text-gray-800 dark:text-gray-200 bg-transparent border border-gray-300 dark:border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer"
               aria-label={t.lang.select}
             >
               <option value={getLocalizedHref(currentPath)} selected>{locale.toUpperCase()}</option>

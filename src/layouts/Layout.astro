@@ -140,21 +140,93 @@ const BASE_URL = import.meta.env.PROD
 
     <!-- Add a base tag -->
     <base href={BASE_URL + '/'} />
+    
+    <!-- Dark mode script - ejecutar antes de renderizar para evitar flash -->
+    <script is:inline>
+      (function() {
+        const html = document.documentElement;
+        function getThemePreference() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme) {
+            return savedTheme;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        const initialTheme = getThemePreference();
+        if (initialTheme === 'dark') {
+          html.setAttribute('data-theme', 'dark');
+          html.classList.add('dark');
+        } else {
+          html.setAttribute('data-theme', 'light');
+          html.classList.remove('dark');
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <body class="m-0 w-full h-full bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
     <a href="#main-content" class="skip-link">{t.nav.skipToContent}</a>
     <Header locale={locale} />
-    <main id="main-content" role="main">
+    <main id="main-content" role="main" class="bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-[calc(100vh-200px)] transition-colors duration-300">
       <slot />
     </main>
     <Footer locale={locale} />
    
+    <script>
+      // Dark mode toggle functionality
+      (function() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // Función para obtener el tema preferido
+        function getThemePreference() {
+          // Primero verificar si hay una preferencia guardada
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme) {
+            return savedTheme;
+          }
+          // Si no, usar la preferencia del sistema
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        
+        // Función para aplicar el tema
+        function applyTheme(theme: string) {
+          if (theme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            html.classList.add('dark');
+          } else {
+            html.setAttribute('data-theme', 'light');
+            html.classList.remove('dark');
+          }
+          localStorage.setItem('theme', theme);
+        }
+        
+        // Aplicar tema inicial
+        const initialTheme = getThemePreference();
+        applyTheme(initialTheme);
+        
+        // Manejar el click en el toggle
+        if (themeToggle) {
+          themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+          });
+        }
+        
+        // Escuchar cambios en la preferencia del sistema
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          // Solo aplicar si no hay una preferencia guardada
+          if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
 
 <style>
-  html,
-  body {
+  html {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -172,6 +244,10 @@ const BASE_URL = import.meta.env.PROD
     z-index: 100;
     font-weight: bold;
     border-radius: 0 0 4px 0;
+  }
+
+  [data-theme="dark"] .skip-link {
+    background: var(--orange-500, #ff8904);
   }
 
   .skip-link:focus {
