@@ -1,12 +1,20 @@
 ---
 import App from '../components/app.astro';
 import Layout from '../layouts/Layout.astro';
+import { getTranslations, getCurrentLocale } from '../i18n/utils';
+
+const locale = getCurrentLocale(Astro.url);
+const t = getTranslations(locale);
 
 ---
-<Layout>
-     <header class="container mx-auto px-6 py-4 max-w-6xl">
-      <h1 class="text-4xl md:text-3xl font-bold text-gray-800">HTML Preview and editor</h1>
-      <div class="h-1 w-24 bg-orange-500 mt-2"></div>
-    </header>
-    <App />
+<Layout
+  title={t.seo.homeTitle}
+  description={t.seo.homeDescription}
+  lang={locale}
+>
+  <header class="container mx-auto px-6 py-4 max-w-6xl">
+    <h1 class="text-4xl md:text-3xl font-bold text-gray-800">{t.home.title}</h1>
+    <div class="h-1 w-24 bg-orange-500 mt-2" aria-hidden="true"></div>
+  </header>
+  <App locale={locale} />
 </Layout>

@@ -7,6 +7,14 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://html-preview.educortez.com',
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en', 'it', 'de'],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
   vite: {
     ssr: {
       noExternal: ['monaco-editor']

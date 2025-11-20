@@ -2,11 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="About | HTML Preview with Monaco Editor">
+<Layout 
+  title="Acerca de - HTML Preview Editor | Información del Proyecto"
+  description="Conoce más sobre HTML Preview Editor, un editor HTML gratuito con vista previa en tiempo real construido con Monaco Editor y Astro. Información sobre el proyecto, tecnologías utilizadas y el desarrollador."
+>
   <div class="bg-gradient-to-b from-orange-50 to-white">
      <header class="container mx-auto px-6 py-4 max-w-6xl">
       <h1 class="text-4xl md:text-3xl font-bold text-gray-800">About this project</h1>
-      <div class="h-1 w-24 bg-orange-500 mt-2"></div>
+      <div class="h-1 w-24 bg-orange-500 mt-2" aria-hidden="true"></div>
     </header>
   </div>
   
@@ -35,10 +38,11 @@ import Layout from '../layouts/Layout.astro';
           href="https://microsoft.github.io/monaco-editor/" 
           target="_blank" 
           rel="noopener noreferrer"
-          class="flex items-center px-4 py-2 bg-orange-100 text-orange-800 rounded-md hover:bg-orange-200 transition-colors"
+          class="flex items-center px-4 py-2 bg-orange-100 text-orange-800 rounded-md hover:bg-orange-200 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+          aria-label="Aprender más sobre Monaco Editor (se abre en nueva ventana)"
         >
           Learn more about Monaco Editor
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
@@ -56,8 +60,14 @@ import Layout from '../layouts/Layout.astro';
           Developer
         </h2>
         <div class="flex items-start gap-4">
-          <a href="https://educortez.com" class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-red-500  hover:from-red-500 hover:to-orange-400 transition-all duration-300 flex items-center justify-center text-white text-xl font-bold shrink-0">
-            <img src="educortez.svg" alt="Eduardo Cortez" class=" object-contain  ">
+          <a 
+            href="https://educortez.com" 
+            class="w-16 h-16 rounded-full bg-gradient-to-br from-orange-400 to-red-500  hover:from-red-500 hover:to-orange-400 transition-all duration-300 flex items-center justify-center text-white text-xl font-bold shrink-0 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+            aria-label="Visitar el sitio web de Eduardo Cortez (se abre en nueva ventana)"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <img src="educortez.svg" alt="" class=" object-contain" aria-hidden="true">
           </a>
           <div>
             <h3 class="font-semibold text-lg">Jose Cortez</h3>
@@ -68,9 +78,10 @@ import Layout from '../layouts/Layout.astro';
               href="https://github.com/JoseCortez1" 
               target="_blank" 
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 text-gray-700 hover:text-orange-700 transition-colors"
+              class="inline-flex items-center gap-2 text-gray-700 hover:text-orange-700 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded"
+              aria-label="Visitar el perfil de GitHub de Jose Cortez (se abre en nueva ventana)"
             >
-              <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor">
+              <svg height="20" width="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
               </svg>
               GitHub: JoseCortez1
@@ -80,14 +91,14 @@ import Layout from '../layouts/Layout.astro';
       </section>
     </div>
     
-    <section class="mt-12 p-8 bg-gradient-to-r from-orange-50 to-orange-500 rounded-xl">
-      <h2 class="text-2xl font-semibold mb-4">Technologies Used</h2>
-      <div class="flex flex-wrap gap-3 mt-6">
-        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm">Monaco Editor</span>
-        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm">Astro</span>
-        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm">Tailwind CSS</span>
-        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm">JavaScript</span>
-        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm">HTML/CSS</span>
+    <section class="mt-12 p-8 bg-gradient-to-r from-orange-50 to-orange-500 rounded-xl" aria-labelledby="technologies-heading">
+      <h2 id="technologies-heading" class="text-2xl font-semibold mb-4">Technologies Used</h2>
+      <div class="flex flex-wrap gap-3 mt-6" role="list">
+        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm" role="listitem">Monaco Editor</span>
+        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm" role="listitem">Astro</span>
+        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm" role="listitem">Tailwind CSS</span>
+        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm" role="listitem">JavaScript</span>
+        <span class="px-3 py-1 bg-white border border-orange-400 rounded-full text-sm shadow-sm" role="listitem">HTML/CSS</span>
       </div>
     </section>
   </main>

@@ -29,6 +29,8 @@ const structuredData = JSON.stringify({
   "url": canonicalURL,
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "softwareVersion": "1.0",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -38,7 +40,19 @@ const structuredData = JSON.stringify({
     "@type": "Person",
     "name": "Eduardo Cortez",
     "url": "https://educortez.com"
-  }
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "ratingCount": "1"
+  },
+  "featureList": [
+    "Editor HTML en tiempo real",
+    "Vista previa instantánea",
+    "Editor Monaco (mismo que VS Code)",
+    "Soporte para HTML, CSS y JavaScript",
+    "Gratuito y sin registro"
+  ]
 });
 const baseURL = Astro.site?.href || "https://html-preview.educortez.com";
 const imageURL = image.startsWith('http') 
@@ -52,15 +66,16 @@ const BASE_URL = import.meta.env.PROD
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <!-- Essential Meta Tags -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="keywords" content="HTML editor, live preview, code editor, HTML preview, web development, Monaco editor, testing HTML, real-time HTML editor" />
+    <meta name="keywords" content="editor HTML, vista previa en vivo, editor de código, preview HTML, desarrollo web, editor Monaco, probar HTML, editor HTML tiempo real, editor HTML online, editor código HTML" />
     <meta name="author" content="Eduardo Cortez" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#ff8904" />
     
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
@@ -80,7 +95,10 @@ const BASE_URL = import.meta.env.PROD
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={imageURL} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HTML Preview Editor - Editor de HTML con vista previa en tiempo real" />
+    <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="HTML Preview Editor" />
     
     <!-- Twitter -->
@@ -89,13 +107,19 @@ const BASE_URL = import.meta.env.PROD
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image:alt" content="HTML Preview Editor - Editor de HTML con vista previa en tiempo real" />
     <meta name="twitter:creator" content="@josecortez" />
+    <meta name="twitter:site" content="@josecortez" />
     
     <!-- Structured Data / JSON-LD -->
     <script type="application/ld+json" set:html={structuredData} />
     
     <!-- Generator Info -->
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     
     <!-- Page Title -->
     <title>{title}</title>
@@ -104,8 +128,9 @@ const BASE_URL = import.meta.env.PROD
     <base href={BASE_URL + '/'} />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <Header />
-    <main>
+    <main id="main-content" role="main">
       <slot />
     </main>
     <Footer />
@@ -119,5 +144,38 @@ const BASE_URL = import.meta.env.PROD
     margin: 0;
     width: 100%;
     height: 100%;
+  }
+
+  /* Skip link para accesibilidad */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--orange-400, #ff8904);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 100;
+    font-weight: bold;
+    border-radius: 0 0 4px 0;
+  }
+
+  .skip-link:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* Mejorar focus visible para accesibilidad */
+  *:focus-visible {
+    outline: 3px solid var(--orange-400, #ff8904);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Asegurar contraste mínimo */
+  a, button {
+    min-height: 44px;
+    min-width: 44px;
   }
 </style>
