@@ -1,11 +1,20 @@
 ---
-// Obtener la ruta actual para resaltarla en el menú
+import { getTranslations, type Locale } from '../i18n/translations';
+import { getCurrentLocale, getLocalizedPath, getAlternateLocales } from '../i18n/utils';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale || getCurrentLocale(Astro.url);
+const t = getTranslations(locale);
 const currentPath = Astro.url.pathname;
 
 // Función para determinar si una ruta es la activa
 const isActive = (path: string) => {
-    if (path === '/' && currentPath === '/') return true;
-    if (path !== '/' && currentPath.startsWith(path)) return true;
+    const normalizedPath = path === '/' ? '/' : getLocalizedPath(path, locale);
+    if (normalizedPath === '/' && currentPath === '/') return true;
+    if (normalizedPath !== '/' && currentPath.startsWith(normalizedPath)) return true;
     return false;
 }
 
@@ -17,41 +26,68 @@ const getLinkClasses = (path: string) => {
     
     return `${baseClasses} ${isActive(path) ? activeClasses : inactiveClasses}`;
 }
+
+const getLocalizedHref = (path: string) => {
+  return getLocalizedPath(path, locale);
+}
 ---
 
 <header role="banner">
-    <nav class="flex items-center justify-between p-4 shadow-sm border-b border-gray-200" role="navigation" aria-label="Navegación principal">
+    <nav class="flex items-center justify-between p-4 shadow-sm border-b border-gray-200" role="navigation" aria-label={t.nav.skipToContent}>
         <div>
             <a 
                 class="text-sm gap-4 font-semibold hover:text-gray-950 text-gray-800 flex items-center focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded" 
-                href="/"
-                aria-label="HTML Preview Editor - Ir al inicio"
+                href={getLocalizedHref('/')}
+                aria-label="HTML Preview Editor - {t.nav.home}"
             >
                 <svg class="w-5 h-6 text-orange-500" viewBox="0 0 896 1024" aria-hidden="true" focusable="false"><path fill="currentColor" d="M831.405 1024h-767q-27 0-45.5-18.5T.405 960V65q0-27 18.5-45.5T64.405 1h448v352q0 13 9 22.5t23 9.5h351v575q0 27-18.5 45.5t-45.5 18.5m-459-440q12-12 12-30t-12-30.5t-29-12.5t-29 13l-175 149q-12 13-12 30.5t12 30.5l175 149q12 13 29 13t29-12.5t12-30.5t-12-30l-146-119zm384 89l-174-149q-12-13-29-13t-29 12.5t-12 30.5t12 30l145 120l-145 119q-12 12-12 30t12 30.5t29 12.5t29-13l174-149q13-13 13-30.5t-13-30.5m-180-673q26 0 44 18l256 257q19 19 19 46h-319z"/></svg>
                 <span>HTML preview</span>
             </a>
         </div>
-        <ul class="flex items-center gap-4" role="menubar">
-            <li role="none">
-                <a 
-                    class={getLinkClasses('/')} 
-                    href="/"
-                    role="menuitem"
-                    aria-current={isActive('/') ? 'page' : undefined}
-                >
-                    Inicio
-                </a>
-            </li>
-            <li role="none">
-                <a 
-                    class={getLinkClasses('/about')} 
-                    href="/about"
-                    role="menuitem"
-                    aria-current={isActive('/about') ? 'page' : undefined}
-                >
-                    About
-                </a>
-            </li>
-        </ul>
+        <div class="flex items-center gap-4">
+          <ul class="flex items-center gap-4" role="menubar">
+              <li role="none">
+                  <a 
+                      class={getLinkClasses('/')} 
+                      href={getLocalizedHref('/')}
+                      role="menuitem"
+                      aria-current={isActive('/') ? 'page' : undefined}
+                  >
+                      {t.nav.home}
+                  </a>
+              </li>
+              <li role="none">
+                  <a 
+                      class={getLinkClasses('/about')} 
+                      href={getLocalizedHref('/about')}
+                      role="menuitem"
+                      aria-current={isActive('/about') ? 'page' : undefined}
+                  >
+                      {t.nav.about}
+                  </a>
+              </li>
+          </ul>
+          <div class="relative" role="group" aria-label={t.lang.select}>
+            <label for="language-selector" class="sr-only">{t.lang.select}</label>
+            <select 
+              id="language-selector"
+              class="text-sm font-semibold text-gray-800 bg-transparent border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer"
+              aria-label={t.lang.select}
+            >
+              <option value={getLocalizedHref(currentPath)} selected>{locale.toUpperCase()}</option>
+              {getAlternateLocales(locale, currentPath).map(({ locale: altLocale, url }) => (
+                <option value={url}>{altLocale.toUpperCase()}</option>
+              ))}
+            </select>
+          </div>
+          <script>
+            document.getElementById('language-selector')?.addEventListener('change', function(e) {
+              const target = e.target as HTMLSelectElement;
+              if (target.value) {
+                window.location.href = target.value;
+              }
+            });
+          </script>
+        </div>
     </nav>
 </header>

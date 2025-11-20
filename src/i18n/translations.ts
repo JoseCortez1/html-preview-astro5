@@ -19,6 +19,9 @@ export interface Translations {
     editorTitle: string;
     editorLabel: string;
     previewLabel: string;
+    initialHTMLTitle: string;
+    initialHTMLHeading: string;
+    initialHTMLText: string;
   };
   
   // About page
@@ -66,6 +69,9 @@ export const translations: Record<Locale, Translations> = {
       editorTitle: 'Editor HTML con Vista Previa en Tiempo Real - HTML Preview Editor',
       editorLabel: 'Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real.',
       previewLabel: 'Vista previa del código HTML. Muestra el resultado de tu código en tiempo real.',
+      initialHTMLTitle: 'Vista Previa',
+      initialHTMLHeading: '¡Editor de vista previa!',
+      initialHTMLText: 'Edita el HTML en el editor de la izquierda para ver los cambios aquí.',
     },
     about: {
       title: 'Acerca de este proyecto',
@@ -103,6 +109,9 @@ export const translations: Record<Locale, Translations> = {
       editorTitle: 'HTML Preview Editor - Test & Edit HTML Code in Real-time',
       editorLabel: 'HTML code editor. Write your code here to see the real-time preview.',
       previewLabel: 'HTML code preview. Shows the result of your code in real-time.',
+      initialHTMLTitle: 'Preview',
+      initialHTMLHeading: 'Preview editor!',
+      initialHTMLText: 'Edit the HTML in the editor on the left to see the changes here.',
     },
     about: {
       title: 'About this project',
@@ -140,6 +149,9 @@ export const translations: Record<Locale, Translations> = {
       editorTitle: 'Editor HTML con Anteprima in Tempo Reale - HTML Preview Editor',
       editorLabel: 'Editor di codice HTML. Scrivi il tuo codice qui per vedere l\'anteprima in tempo reale.',
       previewLabel: 'Anteprima del codice HTML. Mostra il risultato del tuo codice in tempo reale.',
+      initialHTMLTitle: 'Anteprima',
+      initialHTMLHeading: 'Editor di anteprima!',
+      initialHTMLText: 'Modifica l\'HTML nell\'editor a sinistra per vedere le modifiche qui.',
     },
     about: {
       title: 'Informazioni su questo progetto',
@@ -177,6 +189,9 @@ export const translations: Record<Locale, Translations> = {
       editorTitle: 'HTML-Editor mit Echtzeit-Vorschau - HTML Preview Editor',
       editorLabel: 'HTML-Code-Editor. Schreiben Sie Ihren Code hier, um die Echtzeit-Vorschau zu sehen.',
       previewLabel: 'HTML-Code-Vorschau. Zeigt das Ergebnis Ihres Codes in Echtzeit.',
+      initialHTMLTitle: 'Vorschau',
+      initialHTMLHeading: 'Vorschau-Editor!',
+      initialHTMLText: 'Bearbeiten Sie das HTML im Editor links, um die Änderungen hier zu sehen.',
     },
     about: {
       title: 'Über dieses Projekt',
@@ -220,13 +235,14 @@ export function getLocaleFromPath(pathname: string): Locale {
 }
 
 export function getLocalizedPath(path: string, locale: Locale): string {
+  // Remove any existing locale prefix
+  const pathWithoutLocale = path.replace(/^\/(es|en|it|de)(\/|$)/, '/');
+  const cleanPath = pathWithoutLocale === '/' ? '' : pathWithoutLocale;
+  
   if (locale === defaultLocale) {
-    return path;
+    return cleanPath || '/';
   }
   
-  // Remove any existing locale prefix
-  const pathWithoutLocale = path.replace(/^\/(es|en|it|de)/, '');
-  
-  return `/${locale}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
+  return `/${locale}${cleanPath}`;
 }
 

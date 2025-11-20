@@ -1,8 +1,8 @@
 ---
-import App from '../components/app.astro';
-import Layout from '../layouts/Layout.astro';
-import { getTranslations } from '../i18n/translations';
-import { getCurrentLocale } from '../i18n/utils';
+import App from '../../components/app.astro';
+import Layout from '../../layouts/Layout.astro';
+import { getTranslations } from '../../i18n/translations';
+import { getCurrentLocale } from '../../i18n/utils';
 
 const locale = getCurrentLocale(Astro.url);
 const t = getTranslations(locale);
@@ -19,3 +19,4 @@ const t = getTranslations(locale);
   </header>
   <App locale={locale} />
 </Layout>
+

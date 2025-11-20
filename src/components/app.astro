@@ -1,18 +1,28 @@
 ---
 // HTMLPreviewer.astro
----
-<div class="html-previewer" role="region" aria-label="Editor HTML con vista previa en tiempo real">
+import { getTranslations, type Locale } from '../i18n/translations';
+import { getCurrentLocale } from '../i18n/utils';
 
-  <div class="editor-container" role="region" aria-label="Editor de código">
-    <label for="monaco-editor" class="sr-only">Editor de código HTML</label>
-    <div id="monaco-editor" role="textbox" aria-label="Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real." aria-multiline="true" tabindex="0"></div>
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale || getCurrentLocale(Astro.url);
+const t = getTranslations(locale);
+
+---
+<div class="html-previewer" role="region" aria-label={t.home.editorLabel}>
+
+  <div class="editor-container" role="region" aria-label={t.home.editorLabel}>
+    <label for="monaco-editor" class="sr-only">{t.home.editorLabel}</label>
+    <div id="monaco-editor" role="textbox" aria-label={t.home.editorLabel} aria-multiline="true" tabindex="0"></div>
   </div>
-  <div class="preview-container" role="region" aria-label="Vista previa del HTML">
-    <label for="preview-frame" class="sr-only">Vista previa del código HTML</label>
+  <div class="preview-container" role="region" aria-label={t.home.previewLabel}>
+    <label for="preview-frame" class="sr-only">{t.home.previewLabel}</label>
     <iframe 
       id="preview-frame" 
-      title="Vista previa del código HTML renderizado"
-      aria-label="Vista previa del código HTML. Muestra el resultado de tu código en tiempo real."
+      title={t.home.previewLabel}
+      aria-label={t.home.previewLabel}
       sandbox="allow-same-origin allow-scripts"
     ></iframe>
   </div>
@@ -98,16 +108,22 @@
 	}
 </style>
 
-<script>
-  import * as monaco from 'monaco-editor';
+<script define:vars={{ locale, translations: t }}>
+  // Cargar Monaco Editor dinámicamente desde el CDN o node_modules
+  (async function() {
+    // Esperar a que el DOM esté listo
+    if (document.readyState === 'loading') {
+      await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+    }
 
-  // Configuración inicial del editor
-  const initialHTML = `<!DOCTYPE html>
-<html lang="es">
+    // Función para generar el HTML inicial según el idioma
+    function getInitialHTML(locale, translations) {
+      return `<!DOCTYPE html>
+<html lang="${locale}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vista Previa</title>
+    <title>${translations.home.initialHTMLTitle}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -120,90 +136,242 @@
     </style>
 </head>
 <body>
-    <h1>Preview editor!</h1>
-    <p>Edita el HTML en el editor de la izquierda para ver los cambios aquí.</p>
+    <h1>${translations.home.initialHTMLHeading}</h1>
+    <p>${translations.home.initialHTMLText}</p>
 </body>
 </html>`;
-
-  // Add this configuration BEFORE Monaco is initialized
-  window.MonacoEnvironment = {
-    getWorkerUrl: function(moduleId, label) {
-      if (label === 'json') {
-        return '/monaco-editor/min/vs/language/json/json.worker.js';
-      }
-      if (label === 'css' || label === 'scss' || label === 'less') {
-        return '/monaco-editor/min/vs/language/css/css.worker.js';
-      }
-      if (label === 'html' || label === 'handlebars' || label === 'razor') {
-        return '/monaco-editor/min/vs/language/html/html.worker.js';
-      }
-      if (label === 'typescript' || label === 'javascript') {
-        return '/monaco-editor/min/vs/language/typescript/ts.worker.js';
-      }
-      return '/monaco-editor/min/vs/editor/editor.worker.js';
     }
-  };
 
-  // Declarar tipo para previewTimeout
-  declare global {
-    interface Window {
-      previewTimeout?: ReturnType<typeof setTimeout>;
-    }
-  }
-
-  // Crear el editor Monaco
-  const monacoEditorElement = document.getElementById('monaco-editor');
-  if (!monacoEditorElement) {
-    throw new Error('Monaco editor element not found');
-  }
-
-  const editor = monaco.editor.create(monacoEditorElement, {
-    value: initialHTML,
-    language: 'html',
-    automaticLayout: true,
-    fontSize: 14,
-    wordWrap: 'on',
-	scrollBeyondLastLine: false,
-
-  });
-
-  // Función para actualizar la vista previa
-  function updatePreview() {
-    const htmlContent = editor.getValue();
-    const previewFrame = document.getElementById('preview-frame') as HTMLIFrameElement | null;
+    // Configuración inicial del editor
+    const initialHTML = getInitialHTML(locale, translations);
     
-    if (!previewFrame) {
-      console.error('Preview frame not found');
+    // Verificar si hay contenido guardado en sessionStorage
+    const savedContent = sessionStorage.getItem('editor-content');
+    const savedModified = sessionStorage.getItem('editor-modified') === 'true';
+    const savedLocale = sessionStorage.getItem('editor-locale');
+    
+    // Si el idioma cambió y el usuario no había modificado, usar el nuevo HTML inicial
+    // Si el usuario ya había modificado, mantener su contenido
+    let editorContent = initialHTML;
+    let userHasModified = false;
+    
+    if (savedContent && savedModified && savedLocale === locale) {
+      // El usuario había modificado y estamos en el mismo idioma, restaurar su contenido
+      editorContent = savedContent;
+      userHasModified = true;
+    } else if (savedLocale && savedLocale !== locale) {
+      // El idioma cambió
+      if (!savedModified) {
+        // El usuario no había modificado, usar nuevo HTML inicial traducido
+        editorContent = initialHTML;
+        userHasModified = false;
+        // Limpiar el contenido guardado del idioma anterior
+        sessionStorage.removeItem('editor-content');
+        sessionStorage.setItem('editor-modified', 'false');
+      } else {
+        // El usuario ya había modificado, mantener su contenido
+        editorContent = savedContent || initialHTML;
+        userHasModified = true;
+      }
+    }
+    
+    // Almacenar el HTML inicial y el estado de modificación
+    let defaultHTML = initialHTML;
+    
+    // Guardar el locale actual
+    sessionStorage.setItem('editor-locale', locale);
+
+    // Cargar Monaco Editor dinámicamente desde CDN
+    let monaco;
+    try {
+      // Cargar desde jsdelivr usando el formato correcto para ES modules
+      const monacoModule = await import('https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/+esm');
+      // Monaco se exporta como default en este formato
+      monaco = monacoModule.default || monacoModule;
+    } catch (e) {
+      console.error('Error loading Monaco Editor from CDN:', e);
+      // Intentar cargar desde unpkg como fallback
+      try {
+        const monacoModule = await import('https://unpkg.com/monaco-editor@0.52.2/esm/vs/editor/editor.api.js');
+        monaco = monacoModule;
+      } catch (e2) {
+        console.error('Error loading Monaco Editor from unpkg:', e2);
+        alert('Error al cargar el editor. Por favor, recarga la página.');
+        return;
+      }
+    }
+
+    // Add this configuration BEFORE Monaco is initialized
+    window.MonacoEnvironment = {
+      getWorkerUrl: function(moduleId, label) {
+        if (label === 'json') {
+          return '/monaco-editor/min/vs/language/json/json.worker.js';
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+          return '/monaco-editor/min/vs/language/css/css.worker.js';
+        }
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+          return '/monaco-editor/min/vs/language/html/html.worker.js';
+        }
+        if (label === 'typescript' || label === 'javascript') {
+          return '/monaco-editor/min/vs/language/typescript/ts.worker.js';
+        }
+        return '/monaco-editor/min/vs/editor/editor.worker.js';
+      }
+    };
+
+    // Crear el editor Monaco
+    const monacoEditorElement = document.getElementById('monaco-editor');
+    if (!monacoEditorElement) {
+      console.error('Monaco editor element not found');
       return;
     }
-    
-    // Crear un blob con el contenido HTML
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    
-    // Actualizar el src del iframe
-    previewFrame.src = url;
-    
-    // Limpiar el URL anterior después de un tiempo
-    setTimeout(() => {
-      URL.revokeObjectURL(url);
-    }, 1000);
-  }
 
-  // Actualizar vista previa inicial
-  updatePreview();
+    // Acceder a monaco correctamente dependiendo de cómo se cargó
+    const monacoEditor = monaco.default || monaco;
+    const editor = monacoEditor.editor.create(monacoEditorElement, {
+      value: editorContent,
+      language: 'html',
+      automaticLayout: true,
+      fontSize: 14,
+      wordWrap: 'on',
+      scrollBeyondLastLine: false,
+    });
 
-  // Escuchar cambios en el editor
-  editor.onDidChangeModelContent(() => {
-    // Debounce para evitar actualizaciones excesivas
-    if (window.previewTimeout) {
-      clearTimeout(window.previewTimeout);
+    // Función para verificar si el contenido es el HTML inicial
+    function isDefaultContent(content) {
+      // Comparar sin espacios en blanco al inicio/final para ser más flexible
+      const normalizedContent = content.trim();
+      const normalizedDefault = defaultHTML.trim();
+      return normalizedContent === normalizedDefault;
     }
-    window.previewTimeout = setTimeout(updatePreview, 300);
-  });
 
-  // Limpiar recursos al salir
-  window.addEventListener('beforeunload', () => {
-    editor.dispose();
-  });
+    // Función para actualizar la vista previa
+    function updatePreview() {
+      const htmlContent = editor.getValue();
+      const previewFrame = document.getElementById('preview-frame');
+      
+      if (!previewFrame) {
+        console.error('Preview frame not found');
+        return;
+      }
+      
+      // Crear un blob con el contenido HTML
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      
+      // Actualizar el src del iframe
+      previewFrame.src = url;
+      
+      // Limpiar el URL anterior después de un tiempo
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 1000);
+    }
+
+    // Actualizar vista previa inicial
+    updatePreview();
+
+    // Escuchar cambios en el editor
+    editor.onDidChangeModelContent(() => {
+      const currentContent = editor.getValue();
+      
+      // Verificar si el usuario ha modificado el contenido
+      if (!isDefaultContent(currentContent)) {
+        userHasModified = true;
+        // Guardar el contenido modificado en sessionStorage
+        sessionStorage.setItem('editor-content', currentContent);
+        sessionStorage.setItem('editor-modified', 'true');
+      }
+      
+      // Debounce para evitar actualizaciones excesivas
+      if (window.previewTimeout) {
+        clearTimeout(window.previewTimeout);
+      }
+      window.previewTimeout = setTimeout(updatePreview, 300);
+    });
+
+    // Función para actualizar el HTML inicial cuando cambie el idioma
+    function updateDefaultHTML(newLocale, newTranslations) {
+      const newInitialHTML = getInitialHTML(newLocale, newTranslations);
+      defaultHTML = newInitialHTML;
+      return newInitialHTML;
+    }
+
+    // Limpiar sessionStorage si el usuario resetea el contenido al HTML inicial
+    // Esto permite que el contenido se actualice cuando cambie el idioma
+    const checkIfResetToDefault = () => {
+      const currentContent = editor.getValue();
+      if (isDefaultContent(currentContent) && userHasModified) {
+        // El usuario volvió al contenido por defecto, limpiar el estado
+        userHasModified = false;
+        sessionStorage.removeItem('editor-content');
+        sessionStorage.setItem('editor-modified', 'false');
+      }
+    };
+
+    // Verificar periódicamente si el contenido fue reseteado
+    setInterval(checkIfResetToDefault, 1000);
+
+    // Guardar las traducciones actuales en sessionStorage para poder usarlas después
+    // Esto nos permite actualizar el contenido cuando cambie el idioma sin recargar
+    const translationsMap = {
+      'es': translations,
+      'en': null, // Se cargarán cuando se necesiten
+      'it': null,
+      'de': null
+    };
+    
+    // Función para obtener traducciones de un locale específico
+    // Por ahora usamos las traducciones actuales, pero idealmente deberíamos cargarlas
+    function getTranslationsForLocale(targetLocale) {
+      // Si tenemos las traducciones actuales y el locale coincide, usarlas
+      if (targetLocale === locale) {
+        return translations;
+      }
+      // Si no, necesitamos recargar la página para obtener las nuevas traducciones
+      // Por ahora retornamos null para indicar que necesitamos recargar
+      return null;
+    }
+
+    // Detectar cambios de idioma en la URL
+    let lastPathname = window.location.pathname;
+    const checkLocaleChange = () => {
+      const currentPathname = window.location.pathname;
+      if (currentPathname !== lastPathname) {
+        lastPathname = currentPathname;
+        
+        // Extraer el nuevo locale de la URL
+        const pathSegments = currentPathname.split('/').filter(Boolean);
+        const newLocale = pathSegments[0] && ['en', 'it', 'de'].includes(pathSegments[0]) 
+          ? pathSegments[0] 
+          : 'es';
+        
+        // Si el locale cambió
+        if (newLocale !== locale) {
+          if (!userHasModified) {
+            // El usuario no ha modificado el contenido
+            // Recargar la página para obtener las nuevas traducciones del servidor
+            // Esto asegura que el HTML inicial se actualice con las traducciones correctas
+            window.location.reload();
+          }
+          // Si el usuario ya modificó, no hacer nada (mantener su contenido)
+          // El contenido ya está guardado en sessionStorage y se restaurará
+        }
+      }
+    };
+
+    // Observar cambios en la URL (cuando se cambia el idioma desde el selector)
+    // Usar MutationObserver para detectar cambios en el DOM también
+    const observer = new MutationObserver(checkLocaleChange);
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // También verificar periódicamente
+    setInterval(checkLocaleChange, 500);
+
+    // Limpiar recursos al salir
+    window.addEventListener('beforeunload', () => {
+      editor.dispose();
+    });
+  })();
 </script>
