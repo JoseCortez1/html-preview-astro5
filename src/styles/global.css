@@ -1,35 +1,54 @@
 @import "tailwindcss";
 
+/* Variables CSS para light mode (valores por defecto) */
 :root {
   --orange-400: #ff8904;
   --orange-500: #e67a00;
   --orange-600: #cc6b00;
   
-  /* Light mode colors - valores por defecto */
+  /* Light mode colors - mejor contraste */
   --bg-primary: #ffffff;
   --bg-secondary: #f9fafb;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --border-color: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --border-color: #d1d5db;
   --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Forzar light mode cuando está explícitamente seleccionado */
-[data-theme="light"],
-:not([data-theme]) {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f9fafb;
-  --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --border-color: #e5e7eb;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --orange-400: #ff8904;
-  --orange-500: #e67a00;
-  --orange-600: #cc6b00;
+/* Sobrescribir todas las clases dark: de Tailwind cuando data-theme="light" está presente */
+/* Esto sobrescribe las media queries de prefers-color-scheme de Tailwind */
+html[data-theme="light"] [class*="dark:"] {
+  /* Anular todas las reglas dark: cuando data-theme="light" - mayor especificidad */
+  color: revert !important;
+  background-color: revert !important;
+  border-color: revert !important;
+  background-image: revert !important;
 }
 
-[data-theme="dark"] {
-  /* Dark mode colors - contrastan con naranja */
+/* Asegurar que las clases normales (sin dark:) se apliquen en light mode */
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* Light mode cuando está explícitamente seleccionado - Mayor especificidad para sobrescribir dark mode */
+html[data-theme="light"],
+html[data-theme="light"].dark,
+html[data-theme="light"]:not(.dark) {
+  --bg-primary: #ffffff !important;
+  --bg-secondary: #f9fafb !important;
+  --text-primary: #111827 !important;
+  --text-secondary: #4b5563 !important;
+  --border-color: #d1d5db !important;
+  --shadow-color: rgba(0, 0, 0, 0.1) !important;
+  --orange-400: #ff8904 !important;
+  --orange-500: #e67a00 !important;
+  --orange-600: #cc6b00 !important;
+}
+
+/* Dark mode - usando .dark para compatibilidad con Tailwind */
+html[data-theme="dark"],
+html.dark[data-theme="dark"],
+html.dark:not([data-theme="light"]) {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
   --text-primary: #f1f5f9;
@@ -43,9 +62,34 @@
   --orange-600: #ff7d00;
 }
 
-/* Solo aplicar dark mode automático si no hay preferencia explícita */
+/* Fallback para dark mode sin data-theme pero con clase .dark */
+html.dark:not([data-theme]) {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --orange-400: #ff9500;
+  --orange-500: #ff8904;
+  --orange-600: #ff7d00;
+}
+
+/* Sobrescribir media queries de prefers-color-scheme cuando data-theme="light" está presente */
+/* Esta regla tiene mayor especificidad que las media queries de Tailwind */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+  html[data-theme="light"] [class*="dark:"] {
+    /* Anular todas las reglas dark: cuando data-theme="light" dentro de la media query */
+    color: revert !important;
+    background-color: revert !important;
+    border-color: revert !important;
+    background-image: revert !important;
+  }
+}
+
+/* Dark mode automático basado en preferencia del sistema (solo si no hay preferencia explícita) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]):not(.dark) {
     --bg-primary: #0f172a;
     --bg-secondary: #1e293b;
     --text-primary: #f1f5f9;

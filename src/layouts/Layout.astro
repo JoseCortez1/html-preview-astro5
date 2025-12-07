@@ -145,6 +145,8 @@ const BASE_URL = import.meta.env.PROD
     <script is:inline>
       (function() {
         const html = document.documentElement;
+        
+        // Función para obtener el tema preferido
         function getThemePreference() {
           const savedTheme = localStorage.getItem('theme');
           if (savedTheme) {
@@ -152,14 +154,32 @@ const BASE_URL = import.meta.env.PROD
           }
           return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
-        const initialTheme = getThemePreference();
-        if (initialTheme === 'dark') {
-          html.setAttribute('data-theme', 'dark');
-          html.classList.add('dark');
-        } else {
-          html.setAttribute('data-theme', 'light');
+        
+        // Función para aplicar el tema
+        function applyTheme(theme) {
+          // Limpiar primero todos los atributos y clases relacionados con el tema
+          html.removeAttribute('data-theme');
           html.classList.remove('dark');
+          
+          // Aplicar el nuevo tema
+          if (theme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            html.classList.add('dark');
+          } else {
+            html.setAttribute('data-theme', 'light');
+            // Asegurarse de que la clase dark NO esté presente
+            html.classList.remove('dark');
+          }
+          localStorage.setItem('theme', theme);
         }
+        
+        // Aplicar tema inicial
+        const initialTheme = getThemePreference();
+        applyTheme(initialTheme);
+        
+        // Exponer función globalmente para el toggle
+        window.__applyTheme = applyTheme;
+        window.__getThemePreference = getThemePreference;
       })();
     </script>
   </head>
@@ -177,37 +197,29 @@ const BASE_URL = import.meta.env.PROD
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
         
-        // Función para obtener el tema preferido
-        function getThemePreference() {
-          // Primero verificar si hay una preferencia guardada
-          const savedTheme = localStorage.getItem('theme');
-          if (savedTheme) {
-            return savedTheme;
-          }
-          // Si no, usar la preferencia del sistema
-          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        
-        // Función para aplicar el tema
-        function applyTheme(theme: string) {
+        // Usar las funciones expuestas desde el script inline
+        const applyTheme = window.__applyTheme || function(theme) {
+          // Limpiar primero todos los atributos y clases relacionados con el tema
+          html.removeAttribute('data-theme');
+          html.classList.remove('dark');
+          
+          // Aplicar el nuevo tema
           if (theme === 'dark') {
             html.setAttribute('data-theme', 'dark');
             html.classList.add('dark');
           } else {
             html.setAttribute('data-theme', 'light');
+            // Asegurarse de que la clase dark NO esté presente
             html.classList.remove('dark');
           }
           localStorage.setItem('theme', theme);
-        }
-        
-        // Aplicar tema inicial
-        const initialTheme = getThemePreference();
-        applyTheme(initialTheme);
+        };
         
         // Manejar el click en el toggle
         if (themeToggle) {
           themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
+            const currentTheme = html.getAttribute('data-theme') || 
+                                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             applyTheme(newTheme);
           });
