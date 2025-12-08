@@ -7,7 +7,6 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: import.meta.env.PROD ? 'https://html-preview.educortez.com' : undefined,
   base: '/',
   i18n: {
     defaultLocale: 'es',
