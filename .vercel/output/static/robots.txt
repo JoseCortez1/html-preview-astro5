@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://html-preview.educortez.com/sitemap.xml
+
+# Crawl-delay (opcional, ayuda a no sobrecargar el servidor)
+Crawl-delay: 1
+

@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="es" data-astro-cid-sckkx6r4> <head><!-- Essential Meta Tags --><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"><meta name="description" content="Editor HTML gratuito con vista previa en tiempo real. Escribe y prueba código HTML, CSS y JavaScript con nuestro editor basado en Monaco. Perfecto para desarrolladores web y estudiantes."><meta name="keywords" content="editor HTML, vista previa en vivo, editor de código, preview HTML, desarrollo web, editor Monaco, probar HTML, editor HTML tiempo real, editor HTML online, editor código HTML"><meta name="author" content="Eduardo Cortez"><meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"><meta name="theme-color" content="#ff8904"><!-- Canonical URL --><link rel="canonical" href="https://html-preview.educortez.com/"><!-- Alternate language links for SEO --><link rel="alternate" hreflang="en" href="https://html-preview.educortez.com/en"><link rel="alternate" hreflang="it" href="https://html-preview.educortez.com/it"><link rel="alternate" hreflang="de" href="https://html-preview.educortez.com/de"><link rel="alternate" hreflang="x-default" href="https://html-preview.educortez.com/"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png"><link rel="icon" type="image/ico" href="/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><!-- Web App Manifest --><link rel="manifest" href="/site.webmanifest"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://html-preview.educortez.com/"><meta property="og:title" content="Editor HTML con Vista Previa en Tiempo Real - HTML Preview Editor"><meta property="og:description" content="Editor HTML gratuito con vista previa en tiempo real. Escribe y prueba código HTML, CSS y JavaScript con nuestro editor basado en Monaco. Perfecto para desarrolladores web y estudiantes."><meta property="og:image" content="https://html-preview.educortez.com/educortez.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="HTML Preview Editor - Editor de HTML con vista previa en tiempo real"><meta property="og:locale" content="es_ES"><meta property="og:site_name" content="HTML Preview Editor"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://html-preview.educortez.com/"><meta name="twitter:title" content="Editor HTML con Vista Previa en Tiempo Real - HTML Preview Editor"><meta name="twitter:description" content="Editor HTML gratuito con vista previa en tiempo real. Escribe y prueba código HTML, CSS y JavaScript con nuestro editor basado en Monaco. Perfecto para desarrolladores web y estudiantes."><meta name="twitter:image" content="https://html-preview.educortez.com/educortez.png"><meta name="twitter:image:alt" content="HTML Preview Editor - Editor de HTML con vista previa en tiempo real"><meta name="twitter:creator" content="@josecortez"><meta name="twitter:site" content="@josecortez"><!-- Structured Data / JSON-LD --><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"HTML Preview Editor","description":"Editor HTML gratuito con vista previa en tiempo real. Escribe y prueba código HTML, CSS y JavaScript con nuestro editor basado en Monaco. Perfecto para desarrolladores web y estudiantes.","url":"https://html-preview.educortez.com/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript. Requires HTML5.","softwareVersion":"1.0","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Eduardo Cortez","url":"https://educortez.com"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","ratingCount":"1"},"featureList":["Editor HTML en tiempo real","Vista previa instantánea","Editor Monaco (mismo que VS Code)","Soporte para HTML, CSS y JavaScript","Gratuito y sin registro"]}</script><!-- Generator Info --><meta name="generator" content="Astro v5.15.9"><!-- Preconnect for performance --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://fonts.googleapis.com"><!-- Page Title --><title>Editor HTML con Vista Previa en Tiempo Real - HTML Preview Editor</title><!-- Dark mode script - ejecutar antes de renderizar para evitar flash --><script>
+      (function() {
+        const html = document.documentElement;
+        
+        // Función para obtener el tema preferido
+        function getThemePreference() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme) {
+            return savedTheme;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        
+        // Función para aplicar el tema
+        function applyTheme(theme) {
+          // Limpiar primero todos los atributos y clases relacionados con el tema
+          html.removeAttribute('data-theme');
+          html.classList.remove('dark');
+          
+          // Aplicar el nuevo tema
+          if (theme === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            html.classList.add('dark');
+          } else {
+            html.setAttribute('data-theme', 'light');
+            // Asegurarse de que la clase dark NO esté presente
+            html.classList.remove('dark');
+          }
+          localStorage.setItem('theme', theme);
+        }
+        
+        // Aplicar tema inicial
+        const initialTheme = getThemePreference();
+        applyTheme(initialTheme);
+        
+        // Exponer función globalmente para el toggle
+        window.__applyTheme = applyTheme;
+        window.__getThemePreference = getThemePreference;
+      })();
+    </script><link rel="stylesheet" href="/_astro/about.DEGaVJp5.css">
+<link rel="stylesheet" href="/_astro/index.CznlcM4w.css"></head> <body class="m-0 w-full h-full bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300" data-astro-cid-sckkx6r4> <a href="#main-content" class="skip-link" data-astro-cid-sckkx6r4>Saltar al contenido principal</a> <header role="banner" class="bg-[var(--bg-primary)] transition-colors duration-300"> <nav class="flex items-center justify-between p-4 shadow-sm border-b border-[var(--border-color)] bg-[var(--bg-primary)] transition-colors duration-300" role="navigation" aria-label="Saltar al contenido principal"> <div> <a class="text-sm gap-4 font-semibold hover:!text-orange-600 dark:hover:text-gray-100 !text-gray-900 dark:!text-gray-200 flex items-center focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded transition-colors" href="/" aria-label="HTML Preview Editor - {t.nav.home}"> <svg class="w-5 h-6 !text-orange-600 dark:!text-orange-400" viewBox="0 0 896 1024" aria-hidden="true" focusable="false"><path fill="currentColor" d="M831.405 1024h-767q-27 0-45.5-18.5T.405 960V65q0-27 18.5-45.5T64.405 1h448v352q0 13 9 22.5t23 9.5h351v575q0 27-18.5 45.5t-45.5 18.5m-459-440q12-12 12-30t-12-30.5t-29-12.5t-29 13l-175 149q-12 13-12 30.5t12 30.5l175 149q12 13 29 13t29-12.5t12-30.5t-12-30l-146-119zm384 89l-174-149q-12-13-29-13t-29 12.5t-12 30.5t12 30l145 120l-145 119q-12 12-12 30t12 30.5t29 12.5t29-13l174-149q13-13 13-30.5t-13-30.5m-180-673q26 0 44 18l256 257q19 19 19 46h-319z"></path></svg> <span>HTML preview</span> </a> </div> <div class="flex items-center gap-4"> <ul class="flex items-center gap-4" role="menubar"> <li role="none"> <a class="text-sm font-semibold transition-colors text-orange-600 dark:text-orange-400 border-b-2 border-orange-600 dark:border-orange-400" href="/" role="menuitem" aria-current="page"> Inicio </a> </li> <li role="none"> <a class="text-sm font-semibold transition-colors text-gray-900 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400 hover:border-b-0" href="/about" role="menuitem"> Acerca de </a> </li> </ul> <button id="theme-toggle" class="p-2 rounded-lg !text-gray-900 dark:!text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors" aria-label="Toggle dark mode" title="Toggle dark mode"> <svg id="theme-icon-light" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path> </svg> <svg id="theme-icon-dark" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path> </svg> </button> <div class="relative" role="group" aria-label="Seleccionar idioma"> <button id="language-dropdown-button" type="button" class="flex items-center gap-1 text-sm font-semibold text-gray-900 dark:text-gray-200 bg-transparent border border-gray-400 dark:border-gray-600 rounded px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 cursor-pointer transition-colors" aria-label="Seleccionar idioma" aria-expanded="false" aria-haspopup="true"> <span>ES</span> <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path> </svg> </button> <div id="language-dropdown-menu" class="hidden absolute right-0 mt-2 w-20 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg z-50 overflow-hidden" role="menu" aria-orientation="vertical"> <a href="/en" class="block px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" role="menuitem"> EN </a><a href="/it" class="block px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" role="menuitem"> IT </a><a href="/de" class="block px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" role="menuitem"> DE </a> </div> </div> <script type="module" src="/_astro/header.astro_astro_type_script_index_0_lang.DwEE0p7B.js"></script> </div> </nav> </header> <main id="main-content" role="main" class="bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-[calc(100vh-200px)] transition-colors duration-300" data-astro-cid-sckkx6r4>  <header class="container mx-auto px-6 py-4 max-w-6xl"> <h1 class="text-4xl md:text-3xl font-bold text-gray-800 dark:text-gray-200">HTML Preview and editor</h1> <div class="h-1 w-24 bg-orange-500 dark:bg-orange-400 mt-2" aria-hidden="true"></div> </header> <div class="grid grid-cols-[60%_auto] h-[80vh] bg-[var(--orange-400)] dark:bg-[var(--orange-500)] rounded-lg mx-4 p-0.5 overflow-hidden transition-colors duration-300 max-md:grid-cols-1 max-md:min-h-screen" role="region" aria-label="Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real." data-astro-cid-aqiath5b> <div class="border-r border-[var(--orange-400)] dark:border-[var(--orange-500)] relative bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)] transition-colors duration-300" role="region" aria-label="Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real." data-astro-cid-aqiath5b> <label for="monaco-editor" class="sr-only" data-astro-cid-aqiath5b>Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real.</label> <div id="monaco-editor" class="h-full w-full outline-none focus-visible:outline-3 focus-visible:outline-[var(--orange-400)] focus-visible:-outline-offset-3" role="textbox" aria-label="Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real." aria-multiline="true" tabindex="0" data-astro-cid-aqiath5b></div> </div> <div class="flex-1 bg-[var(--bg-primary)] dark:bg-[var(--bg-secondary)] relative transition-colors duration-300" role="region" aria-label="Vista previa del código HTML. Muestra el resultado de tu código en tiempo real." data-astro-cid-aqiath5b> <label for="preview-frame" class="sr-only" data-astro-cid-aqiath5b>Vista previa del código HTML. Muestra el resultado de tu código en tiempo real.</label> <iframe id="preview-frame" class="w-full h-full border-0 rounded-r-lg block" title="Vista previa del código HTML. Muestra el resultado de tu código en tiempo real." aria-label="Vista previa del código HTML. Muestra el resultado de tu código en tiempo real." sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox" data-astro-cid-aqiath5b></iframe> </div> </div>  <script>(function(){const locale = "es";
+const translations = {"nav":{"home":"Inicio","about":"Acerca de","skipToContent":"Saltar al contenido principal"},"home":{"title":"HTML Preview and editor","description":"Editor HTML gratuito con vista previa en tiempo real. Escribe y prueba código HTML, CSS y JavaScript con nuestro editor basado en Monaco.","editorTitle":"Editor HTML con Vista Previa en Tiempo Real - HTML Preview Editor","editorLabel":"Editor de código HTML. Escribe tu código aquí para ver la vista previa en tiempo real.","previewLabel":"Vista previa del código HTML. Muestra el resultado de tu código en tiempo real.","initialHTMLTitle":"Vista Previa","initialHTMLHeading":"¡Editor de vista previa!","initialHTMLText":"Edita el HTML en el editor de la izquierda para ver los cambios aquí."},"about":{"title":"Acerca de este proyecto","projectPurpose":"Propósito del Proyecto","projectPurposeText":"Este proyecto fue creado para explorar y demostrar la funcionalidad de Monaco Editor, el poderoso editor de código que impulsa Visual Studio Code de Microsoft. Proporciona una forma de previsualizar código HTML en tiempo real utilizando las robustas capacidades de edición de Monaco Editor.","learnMore":"Aprender más sobre Monaco Editor","developer":"Desarrollador","developerText":"Desarrollador web apasionado por crear aplicaciones web intuitivas y eficientes. Puedes encontrar más de mi trabajo y proyectos en GitHub:","technologiesUsed":"Tecnologías Utilizadas"},"footer":{"rights":"Todos los derechos reservados","visitWebsite":"Visitar el sitio web de Eduardo Cortez - educortez.com"},"lang":{"select":"Seleccionar idioma","current":"Idioma actual"},"seo":{"homeTitle":"Editor HTML con Vista Previa en Tiempo Real - HTML Preview Editor","homeDescription":"Editor HTML gratuito con vista previa en tiempo real. Escribe y prueba código HTML, CSS y JavaScript con nuestro editor basado en Monaco. Perfecto para desarrolladores web y estudiantes.","aboutTitle":"Acerca de - HTML Preview Editor | Información del Proyecto","aboutDescription":"Conoce más sobre HTML Preview Editor, un editor HTML gratuito con vista previa en tiempo real construido con Monaco Editor y Astro. Información sobre el proyecto, tecnologías utilizadas y el desarrollador."}};
+
+  // Cargar Monaco Editor dinámicamente desde el CDN o node_modules
+  (async function() {
+    // Esperar a que el DOM esté listo
+    if (document.readyState === 'loading') {
+      await new Promise(resolve => document.addEventListener('DOMContentLoaded', resolve));
+    }
+
+    // Función para generar el HTML inicial según el idioma
+    function getInitialHTML(locale, translations) {
+      return `<!DOCTYPE html>
+<html lang="${locale}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${translations.home.initialHTMLTitle}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>${translations.home.initialHTMLHeading}</h1>
+    <p>${translations.home.initialHTMLText}</p>
+</body>
+</html>`;
+    }
+
+    // Configuración inicial del editor
+    const initialHTML = getInitialHTML(locale, translations);
+    
+    // Verificar si hay contenido guardado en sessionStorage
+    const savedContent = sessionStorage.getItem('editor-content');
+    const savedModified = sessionStorage.getItem('editor-modified') === 'true';
+    const savedLocale = sessionStorage.getItem('editor-locale');
+    
+    // Si el idioma cambió y el usuario no había modificado, usar el nuevo HTML inicial
+    // Si el usuario ya había modificado, mantener su contenido
+    let editorContent = initialHTML;
+    let userHasModified = false;
+    
+    if (savedContent && savedModified && savedLocale === locale) {
+      // El usuario había modificado y estamos en el mismo idioma, restaurar su contenido
+      editorContent = savedContent;
+      userHasModified = true;
+    } else if (savedLocale && savedLocale !== locale) {
+      // El idioma cambió
+      if (!savedModified) {
+        // El usuario no había modificado, usar nuevo HTML inicial traducido
+        editorContent = initialHTML;
+        userHasModified = false;
+        // Limpiar el contenido guardado del idioma anterior
+        sessionStorage.removeItem('editor-content');
+        sessionStorage.setItem('editor-modified', 'false');
+      } else {
+        // El usuario ya había modificado, mantener su contenido
+        editorContent = savedContent || initialHTML;
+        userHasModified = true;
+      }
+    }
+    
+    // Almacenar el HTML inicial y el estado de modificación
+    let defaultHTML = initialHTML;
+    
+    // Guardar el locale actual
+    sessionStorage.setItem('editor-locale', locale);
+
+    // Cargar Monaco Editor dinámicamente desde CDN
+    let monaco;
+    try {
+      // Cargar desde jsdelivr usando el formato correcto para ES modules
+      const monacoModule = await import('https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/+esm');
+      // Monaco se exporta como default en este formato
+      monaco = monacoModule.default || monacoModule;
+    } catch (e) {
+      console.error('Error loading Monaco Editor from CDN:', e);
+      // Intentar cargar desde unpkg como fallback
+      try {
+        const monacoModule = await import('https://unpkg.com/monaco-editor@0.52.2/esm/vs/editor/editor.api.js');
+        monaco = monacoModule;
+      } catch (e2) {
+        console.error('Error loading Monaco Editor from unpkg:', e2);
+        alert('Error al cargar el editor. Por favor, recarga la página.');
+        return;
+      }
+    }
+
+    // Add this configuration BEFORE Monaco is initialized
+    window.MonacoEnvironment = {
+      getWorkerUrl: function(moduleId, label) {
+        if (label === 'json') {
+          return '/monaco-editor/min/vs/language/json/json.worker.js';
+        }
+        if (label === 'css' || label === 'scss' || label === 'less') {
+          return '/monaco-editor/min/vs/language/css/css.worker.js';
+        }
+        if (label === 'html' || label === 'handlebars' || label === 'razor') {
+          return '/monaco-editor/min/vs/language/html/html.worker.js';
+        }
+        if (label === 'typescript' || label === 'javascript') {
+          return '/monaco-editor/min/vs/language/typescript/ts.worker.js';
+        }
+        return '/monaco-editor/min/vs/editor/editor.worker.js';
+      }
+    };
+
+    // Crear el editor Monaco
+    const monacoEditorElement = document.getElementById('monaco-editor');
+    if (!monacoEditorElement) {
+      console.error('Monaco editor element not found');
+      return;
+    }
+
+    // Acceder a monaco correctamente dependiendo de cómo se cargó
+    const monacoEditor = monaco.default || monaco;
+    
+    // Función para obtener el tema de Monaco basado en el tema de la página
+    function getMonacoTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      return currentTheme === 'dark' ? 'vs-dark' : 'vs';
+    }
+    
+    const editor = monacoEditor.editor.create(monacoEditorElement, {
+      value: editorContent,
+      language: 'html',
+      automaticLayout: true,
+      fontSize: 14,
+      wordWrap: 'on',
+      scrollBeyondLastLine: false,
+      theme: getMonacoTheme(),
+    });
+    
+    // Actualizar el tema de Monaco cuando cambie el tema de la página
+    const themeObserver = new MutationObserver(() => {
+      const newTheme = getMonacoTheme();
+      monacoEditor.editor.setTheme(newTheme);
+    });
+    
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme', 'class']
+    });
+
+    // Función para verificar si el contenido es el HTML inicial
+    function isDefaultContent(content) {
+      // Comparar sin espacios en blanco al inicio/final para ser más flexible
+      const normalizedContent = content.trim();
+      const normalizedDefault = defaultHTML.trim();
+      return normalizedContent === normalizedDefault;
+    }
+
+    // Función para actualizar la vista previa
+    function updatePreview() {
+      const htmlContent = editor.getValue();
+      const previewFrame = document.getElementById('preview-frame');
+      
+      if (!previewFrame) {
+        console.error('Preview frame not found');
+        return;
+      }
+      
+      // Crear un blob con el contenido HTML
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      
+      // Actualizar el src del iframe
+      previewFrame.src = url;
+      
+      // Limpiar el URL anterior después de un tiempo
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 1000);
+    }
+
+    // Actualizar vista previa inicial
+    updatePreview();
+
+    // Escuchar cambios en el editor
+    editor.onDidChangeModelContent(() => {
+      const currentContent = editor.getValue();
+      
+      // Verificar si el usuario ha modificado el contenido
+      if (!isDefaultContent(currentContent)) {
+        userHasModified = true;
+        // Guardar el contenido modificado en sessionStorage
+        sessionStorage.setItem('editor-content', currentContent);
+        sessionStorage.setItem('editor-modified', 'true');
+      }
+      
+      // Debounce para evitar actualizaciones excesivas
+      if (window.previewTimeout) {
+        clearTimeout(window.previewTimeout);
+      }
+      window.previewTimeout = setTimeout(updatePreview, 300);
+    });
+
+    // Función para actualizar el HTML inicial cuando cambie el idioma
+    function updateDefaultHTML(newLocale, newTranslations) {
+      const newInitialHTML = getInitialHTML(newLocale, newTranslations);
+      defaultHTML = newInitialHTML;
+      return newInitialHTML;
+    }
+
+    // Limpiar sessionStorage si el usuario resetea el contenido al HTML inicial
+    // Esto permite que el contenido se actualice cuando cambie el idioma
+    const checkIfResetToDefault = () => {
+      const currentContent = editor.getValue();
+      if (isDefaultContent(currentContent) && userHasModified) {
+        // El usuario volvió al contenido por defecto, limpiar el estado
+        userHasModified = false;
+        sessionStorage.removeItem('editor-content');
+        sessionStorage.setItem('editor-modified', 'false');
+      }
+    };
+
+    // Verificar periódicamente si el contenido fue reseteado
+    setInterval(checkIfResetToDefault, 1000);
+
+    // Guardar las traducciones actuales en sessionStorage para poder usarlas después
+    // Esto nos permite actualizar el contenido cuando cambie el idioma sin recargar
+    const translationsMap = {
+      'es': translations,
+      'en': null, // Se cargarán cuando se necesiten
+      'it': null,
+      'de': null
+    };
+    
+    // Función para obtener traducciones de un locale específico
+    // Por ahora usamos las traducciones actuales, pero idealmente deberíamos cargarlas
+    function getTranslationsForLocale(targetLocale) {
+      // Si tenemos las traducciones actuales y el locale coincide, usarlas
+      if (targetLocale === locale) {
+        return translations;
+      }
+      // Si no, necesitamos recargar la página para obtener las nuevas traducciones
+      // Por ahora retornamos null para indicar que necesitamos recargar
+      return null;
+    }
+
+    // Detectar cambios de idioma en la URL
+    let lastPathname = window.location.pathname;
+    const checkLocaleChange = () => {
+      const currentPathname = window.location.pathname;
+      if (currentPathname !== lastPathname) {
+        lastPathname = currentPathname;
+        
+        // Extraer el nuevo locale de la URL
+        const pathSegments = currentPathname.split('/').filter(Boolean);
+        const newLocale = pathSegments[0] && ['en', 'it', 'de'].includes(pathSegments[0]) 
+          ? pathSegments[0] 
+          : 'es';
+        
+        // Si el locale cambió
+        if (newLocale !== locale) {
+          if (!userHasModified) {
+            // El usuario no ha modificado el contenido
+            // Recargar la página para obtener las nuevas traducciones del servidor
+            // Esto asegura que el HTML inicial se actualice con las traducciones correctas
+            window.location.reload();
+          }
+          // Si el usuario ya modificó, no hacer nada (mantener su contenido)
+          // El contenido ya está guardado en sessionStorage y se restaurará
+        }
+      }
+    };
+
+    // Observar cambios en la URL (cuando se cambia el idioma desde el selector)
+    // Usar MutationObserver para detectar cambios en el DOM también
+    const observer = new MutationObserver(checkLocaleChange);
+    observer.observe(document.body, { childList: true, subtree: true });
+    
+    // También verificar periódicamente
+    setInterval(checkLocaleChange, 500);
+
+    // Limpiar recursos al salir
+    window.addEventListener('beforeunload', () => {
+      editor.dispose();
+    });
+  })();
+})();</script>  </main> <footer class="px-6 mt-8 bg-[var(--bg-primary)] transition-colors duration-300" role="contentinfo" aria-label="Pie de página"> <div class="max-w-7xl mx-auto py-8 border-t border-[var(--orange-600)] dark:border-[var(--orange-500)] flex flex-col sm:flex-row justify-between items-center gap-4 transition-colors duration-300"> <p class="text-[var(--text-primary)] text-sm transition-colors duration-300">
+&copy; 2025 <span itemprop="copyrightHolder">Eduardo Cortez</span>.
+<span class="sr-only">Todos los derechos reservados</span> <span aria-hidden="true">Todos los derechos reservados</span> </p> <a href="https://educortez.com" class="text-orange-600 dark:text-orange-500 hover:text-orange-700 dark:hover:text-orange-400 hover:underline text-sm flex items-center gap-2 group font-bold focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded transition-colors" aria-label="Visitar el sitio web de Eduardo Cortez - educortez.com" rel="noopener noreferrer" target="_blank"> <img src="/educortez.svg" alt="" height="auto" width="20" height="20" class="w-5 transition-transform duration-300 group-hover:scale-105" aria-hidden="true"> <span>educortez.com</span> </a> </div> </footer> <script type="module" src="/_astro/Layout.astro_astro_type_script_index_0_lang.BJT6wZ0x.js"></script> </body> </html> 
